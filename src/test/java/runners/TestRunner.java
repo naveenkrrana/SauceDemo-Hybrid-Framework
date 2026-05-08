@@ -9,8 +9,8 @@ import org.testng.annotations.DataProvider;
         features = "src/test/resources/features", // 1. Where are the English files?
         glue = "stepDefinitions",                 // 2. Where is the Java translation code?
         plugin = {                                // 3. What kind of reports do we want?
-                "pretty",
-                "html:target/cucumber-reports/cucumber-report.html"
+                "pretty"
+                //"html:target/cucumber-reports/cucumber-report.html"
         },
         monochrome = true                         // 4. Cleans up the terminal output
 )

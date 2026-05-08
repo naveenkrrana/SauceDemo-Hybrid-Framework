@@ -44,4 +44,7 @@ test {
     testLogging {
         showStandardStreams = true
     }
+
+    reports.html.required = false     // Disables the redundant Gradle HTML report
+    reports.junitXml.required = false // Disables the XML report
 }

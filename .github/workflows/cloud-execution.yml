@@ -35,7 +35,5 @@ jobs:
         if: always() # Forces this step to run even if the tests fail
         uses: actions/upload-artifact@v4
         with:
-          name: Automation-Reports
-          path: |
-            build/reports/
-            target/
+          name: Extent-Enterprise-Report
+          path: target/
