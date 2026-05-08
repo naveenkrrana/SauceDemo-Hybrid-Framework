@@ -1,0 +1,41 @@
+name: Enterprise Hybrid Automation Pipeline
+
+# 1. THE TRIGGER: When should this pipeline run?
+on:
+  push:
+    branches: [ "master" ] # Runs automatically every time you push to the master branch
+
+# 2. THE SERVER: What kind of computer are we renting?
+jobs:
+  run-automation-tests:
+    runs-on: ubuntu-latest # A blank, headless Linux server provided by GitHub
+
+    steps:
+      # 3. DOWNLOAD: Tell the server to copy your code from GitHub into its own memory
+      - name: Checkout Codebase
+        uses: actions/checkout@v4
+
+      # 4. ENVIRONMENT: Install Java on the Linux server
+      - name: Setup Java JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '26' # Uses Java 17. (If you use Java 11 or 21, change this number!)
+          distribution: 'temurin'
+
+      # 5. PERMISSIONS: Give the Linux server security clearance to run Gradle
+      - name: Make Gradle Executable
+        run: chmod +x gradlew
+
+      # 6. EXECUTION: The exact command you run on your laptop!
+      - name: Execute UI and API Tests
+        run: ./gradlew clean test
+
+      # 7. ARTIFACTS: Save the ExtentReports and Cucumber reports so you can download them
+      - name: Upload Test Reports
+        if: always() # Forces this step to run even if the tests fail
+        uses: actions/upload-artifact@v4
+        with:
+          name: Automation-Reports
+          path: |
+            build/reports/
+            target/
