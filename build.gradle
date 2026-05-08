@@ -1,0 +1,47 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Selenium WebDriver
+    implementation 'org.seleniumhq.selenium:selenium-java:4.18.1'
+
+    // TestNG for assertions and test execution
+    testImplementation 'org.testng:testng:7.9.0'
+
+    // Selenium uses SLF4J for logging. Without this simple speaker dependency,
+    // the terminal gets polluted with missing logger warnings.
+    // Added solely to silence the harmless "SLF4J: Failed to load class" terminal warning
+    // Can be safely removed if we ever implement a real logging framework (like Log4j).
+    testImplementation 'org.slf4j:slf4j-simple:2.0.13'
+
+    // ExtentReports for beautiful HTML reporting
+    implementation 'com.aventstack:extentreports:5.1.1'
+
+    // Cucumber BDD Engine
+    implementation 'io.cucumber:cucumber-java:7.15.0'
+    implementation 'io.cucumber:cucumber-testng:7.15.0'
+
+    // RestAssured for API Testing
+    implementation 'io.rest-assured:rest-assured:5.4.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.16.1'
+}
+
+test {
+    useTestNG() {
+        // We are telling the Gradle engine exactly where our playlist lives!
+        suites 'src/test/resources/testng.xml'
+    }
+
+    // Tell Gradle to stop hiding our print statements!
+    testLogging {
+        showStandardStreams = true
+    }
+}
